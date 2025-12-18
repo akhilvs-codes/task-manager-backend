@@ -33,6 +33,12 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        const temUser = await temUserModel.findOne({ email });
+
+        if (temUser?.email) {
+            await temUserModel.deleteOne({email});
+        }
+
         await temUserModel.create({ name, email, password: hashedPassword, otp });
 
         res.status(201).json({ message: "otp sent successfully" });
@@ -49,6 +55,9 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body;
+
+        console.log(email,password);
+        
 
         if (!email || !password) {
             return res.status(400).json({ message: "Email and password are required" });
@@ -103,15 +112,19 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const { email, otp } = req.body; 
 
         const temUser = await temUserModel.findOne({ email });
+        console.log(temUser,email,otp);
 
         if (!temUser) {
             return res.status(400).json({ message: "Invalid or expired OTP" });
         }
 
+        
 
         if (temUser.otp !== otp) {
             return res.status(400).json({ message: "Invalid OTP" });
         }
+
+
 
         await User.create({
             name: temUser.name,
