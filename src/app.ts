@@ -4,6 +4,7 @@
 import express from "express"
 import cors from "cors"
 import authRoute from "@routes/auth.routes"
+import {errorHandler} from "@middlewares/error.middleware"
 
 
 
@@ -16,6 +17,9 @@ app.use(cors({
 app.use(express.json())
 
 app.use("/api/auth",authRoute)
+
+
+app.use(errorHandler)
 
 
 

@@ -4,7 +4,7 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import User from "@models/user.model";
 import dotenv from "dotenv";
 import { sendOtpEmail } from '@services/email.service';
-import temUserModel from '@models/temUser.model';
+import temUserModel from '@models/temuser.model';
 dotenv.config();
 
 
