@@ -51,6 +51,8 @@ export const updateTask = async (  req: Request,  res: Response,  next: NextFunc
     try {
         const { id } = req.params;
 
+        console.log("update tast",id,req.body);
+        
         const task = await Task.findOneAndUpdate(
             { _id: id, user: req.user!.userId },
             req.body,
