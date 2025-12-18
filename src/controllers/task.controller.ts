@@ -71,8 +71,10 @@ export const updateTask = async (  req: Request,  res: Response,  next: NextFunc
 
 export const deleteTask = async (  req: Request, res: Response, next: NextFunction) => {
     try {
+        
         const { id } = req.params;
-
+        
+        console.log("deleting task check working",id);
         const task = await Task.findOneAndDelete({
             _id: id,
             user: req.user!.userId,
