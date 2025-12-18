@@ -8,8 +8,10 @@ dotenv.config();
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
-    try {
+    console.log("auth middleware");
 
+    try {
+        
         const accessToken = req.cookies.accessToken;
         const refreshToken = req.cookies.refreshToken;
 
@@ -18,6 +20,8 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
             req.user = decodedAccessData;
 
+            console.log(decodedAccessData);
+            
             return next();
         }
         if (refreshToken) {
@@ -29,7 +33,8 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
             }, process.env.JWT_SECRET as string, {
                 expiresIn: "1h"
             });
-
+            console.log("created new token");
+            
 
             req.user = decodedRefreshData;
 
